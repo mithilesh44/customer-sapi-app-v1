@@ -1,0 +1,14 @@
+{
+  "registrationRequest": {
+    "contactType": "mobile",
+    "countryCode": "+91",
+    "mobile": "86889864",
+    "password": "fgftdh",
+    "acceptDataPolicy": true,
+    "receivedNews": true,
+    "acceptPic": true,
+    "locale": "en",
+    "captchaToken": "fsgxhhfgdsfscgbcvhb",
+    "recieveClaimsettle": true
+  }
+}

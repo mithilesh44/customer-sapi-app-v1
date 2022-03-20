@@ -1,0 +1,63 @@
+#%RAML 1.0
+title: customer-sapi-raml
+description: This aoi is used by Frontend system to interact with customer related API.
+
+version: 1.0.0
+
+traits:
+  comman-header: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/traits/headers-comman-trait.raml
+  
+
+types:
+  error-dataType: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/dataType/error-dataType.raml
+  post-registration resquest: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/dataType/post-registration-request-dataType.raml
+  post-registration response: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/dataType/post-registration-response-dataType.raml
+
+/customer:
+  /registration:
+    post:
+      is:
+        - comman-header
+      body:
+        application/json:
+          type: post-registration resquest
+          example: !include /example/post-registration-request-example.json
+                      
+      responses:
+        201:
+          body:
+            application/json:
+              type: post-registration response
+              example: !include /example/post-registration-response-example.json
+                                       
+        400:
+          body:
+            application/json:              
+                type: error-dataType
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-400-response-example.json
+                       
+        401:
+          body:
+            application/json:              
+                type: error-dataType
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-401-response-example.json
+                  
+        404:
+          body:
+            application/json:              
+                type: error-dataType
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-404-response-example.json
+                  
+        500: 
+         body:
+            application/json:              
+                type: error-dataType
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-500-response-example.json
+                  
+          
+                
+              
+            
+
+             
+            
