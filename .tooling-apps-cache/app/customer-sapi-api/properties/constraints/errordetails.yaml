@@ -1,0 +1,12 @@
+error:
+ bad_request:
+   code: "400"
+   errorType: "bad request"
+   title: "Invalid Request"
+   details: "The input contains invalid data ,amount should be integer"
+ Resource_Not_Found:
+   code: "404"
+   errorType: "Not Found"
+   title: "resource not found"
+   details: "The url request is invalid or the resource requested does not exists"
+  

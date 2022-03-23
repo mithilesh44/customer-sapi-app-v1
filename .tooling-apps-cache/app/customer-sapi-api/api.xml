@@ -30,19 +30,18 @@
 		<error-handler ref="apikit-global-errorError_Handler" />
     </flow>
     <flow name="post:\customer\registration:application\json:api-config">
-        <flow-ref doc:name="Flow Reference" doc:id="fc406d79-5520-431f-8fc7-9de0f7a77969" name="post-customer-registration-implimentationFlow"/>
-		<ee:transform>
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  registrationResponse: {
-    eventInstanceId: "hsrrtreah",
-    status: "success"
-  }
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
+		<flow-ref doc:name="Flow Reference To call intializeRequest Data" doc:id="e4355875-a580-468c-b27a-a064a0a856c9" name="intialise-request-data-subFlow" />
+		<logger level="INFO" doc:name="Start_Logger for customer Registration API" doc:id="9fb747c1-98a5-4493-8d95-c8181cfdc1ef" message="#[{&#10; TimeStamp: now(),&#10; transactionId: vars.headers.'x-cms-transactionId',&#10; AppName: app.name, FlowName: flow.name,&#10; BusinessProcessName: &quot;Customer Registration&quot;,&#10; category: &quot;Customer&quot;,&#10; OriginatingApplication: &quot;Process API&quot;,&#10; DesinationApplication: &quot;Salesforce&quot;,&#10; CustomerId: &quot;NA&quot;,&#10; txnState: &quot;Start&quot;&#10; }]"/>
+		<flow-ref doc:name="Flow Reference to call Customer Registration implimentation" doc:id="fc406d79-5520-431f-8fc7-9de0f7a77969" name="post-customer-state-implimentationFlow"/>
+		<logger level="INFO" doc:name="END_Logger for customer Registration API" doc:id="4b1fafb2-99e3-4837-9a29-8b0d6d83e094" message="#[%dw 2.0&#10;output application/json indent = false&#10;---&#10;{&#10;  TimeStamp: now(),&#10;  transactionId: vars.headers.'x-cms-transactionId',&#10;  AppName: app.name,&#10;  FlowName: flow.name,&#10;   BusinessProcessName: &quot;Customer Registration&quot;,&#10; category: &quot;Customer&quot;,&#10; OriginatingApplication: &quot;Process API&quot;,&#10; DesinationApplication: &quot;Salesforce&quot;,&#10; CustomerId: &quot;NA&quot;,&#10; txnState: &quot;SFDC Response&quot;&#10; }]"/>
+		<error-handler ref="app-global-errorError_Handler" />
+    </flow>
+    
+    <flow name="post:\customerState:application\json:api-config">
+		<flow-ref doc:name="Flow Reference To call intializeRequest Data" doc:id="e6cfd5b9-aae9-4faf-8c4a-6c5a16665e56" name="intialise-request-data-subFlow" />
+		<logger level="INFO" doc:name="Start_Logger for customer Registration API" doc:id="1fb50239-645f-4bf6-944f-49370e070d8a" message="#[{&#10;&#10; TimeStamp: now(),&#10;&#10; transactionId: vars.headers.'x-cms-transactionId',&#10;&#10; AppName: app.name, FlowName: flow.name,&#10;&#10; BusinessProcessName: &quot;Customer State&quot;,&#10;&#10; category: &quot;Customer&quot;,&#10;&#10; OriginatingApplication: &quot;Process API&quot;,&#10;&#10; DesinationApplication: &quot;Salesforce&quot;,&#10;&#10; CustomerId: &quot;NA&quot;,&#10;&#10; txnState: &quot;Start&quot;&#10;&#10; }]"/>
+		<flow-ref doc:name="Flow Reference to call Customer State implimentation" doc:id="f8999937-677c-4fd7-82e3-df88ebce1ed0" name="post-customer-state-implimentationFlow"/>
+		<logger level="INFO" doc:name="END_Logger for customer Registration API" doc:id="752696da-ce17-459a-8a9c-ee547bfc0739" message="#[%dw 2.0&#10;&#10;output application/json indent = false&#10;&#10;---&#10;&#10;{&#10;&#10;  TimeStamp: now(),&#10;&#10;  transactionId: vars.headers.'x-cms-transactionId',&#10;&#10;  AppName: app.name,&#10;&#10;  FlowName: flow.name,&#10;&#10;   BusinessProcessName: &quot;Customer State&quot;,&#10;&#10; category: &quot;Customer&quot;,&#10;&#10; OriginatingApplication: &quot;Process API&quot;,&#10;&#10; DesinationApplication: &quot;Salesforce&quot;,&#10;&#10; CustomerId: &quot;NA&quot;,&#10;&#10; txnState: &quot;SFDC Response&quot;&#10;&#10; }]"/>
+		<error-handler ref="app-global-errorError_Handler" />
     </flow>
 </mule>

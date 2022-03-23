@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mu
 
 	<flow name="post-customer-registration-implimentationFlow"
 		doc:id="062a0dd2-a975-44fd-a75d-55c3330ddd18">
-		<ee:transform doc:name="Transform Message"
+		<ee:transform doc:name="Transform Message to Create SFDC Request for  payload for Registration"
 			doc:id="d3ca7df8-1e71-4803-90e3-6392cb9574aa">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
@@ -32,15 +32,17 @@ output application/json
     }]]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<salesforce:create doc:name="Create" doc:id="7d737a86-81b2-489c-871f-145b8508a9d2" config-ref="Salesforce_Config" type="registration__c"/>
-		<ee:transform>
+		<logger level="INFO" doc:name="Request Logger for SFDC call" doc:id="40df70dd-9208-4a3f-a575-5637b5d0fdb7" message="#[%dw 2.0&#10;output application/json indent = false&#10;---&#10;{&#10; TimeStamp: vars.requestTime_var,&#10; transactionId: vars.headers.'x-cms-transactionId',&#10; AppName: app.name, FlowName: flow.name,&#10; BusinessProcessName: &quot;Customer Registration&quot;,&#10; category: &quot;Customer&quot;,&#10; OriginatingApplication: &quot;Process API&quot;,&#10; DesinationApplication: &quot;Salesforce&quot;,&#10; CustomerId: &quot;NA&quot;,&#10; txnState: &quot;SFDC Request&quot;&#10; }]"/>
+		<salesforce:create doc:name="Create call to SFDC `Registration Object To Insert Registration Data" doc:id="7d737a86-81b2-489c-871f-145b8508a9d2" config-ref="Salesforce_Config" type="registration__c"/>
+		<logger level="INFO" doc:name="Response Logger for SFDC call" doc:id="506e04f7-e360-4288-ac38-7cd4b8b1939c" message="#[%dw 2.0&#10;output application/json indent = false&#10;---&#10;{&#10;  TimeStamp: now(),&#10;  transactionId: vars.headers.'x-cms-transactionId',&#10;  AppName: app.name,&#10;  FlowName: flow.name,&#10;   BusinessProcessName: &quot;Customer Registration&quot;,&#10; category: &quot;Customer&quot;,&#10; OriginatingApplication: &quot;Process API&quot;,&#10; DesinationApplication: &quot;Salesforce&quot;,&#10; CustomerId: &quot;NA&quot;,&#10; txnState: &quot;SFDC Response&quot;&#10; }]"/>
+		<ee:transform doc:name="Transform Message to Create registration SAPI Response">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
   registrationResponse: {
-    eventInstanceId: "hsrrtreah",
+    eventInstanceId: vars.headers.'x-cms-transactionId',
     status: "success"
   }
 }]]></ee:set-payload>

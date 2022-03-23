@@ -5,13 +5,18 @@ description: This aoi is used by Frontend system to interact with customer relat
 version: 1.0.0
 
 traits:
-  comman-header: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/traits/headers-comman-trait.raml
+  comman-header: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/traits/headers-comman-trait.raml
   
 
 types:
-  error-dataType: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/dataType/error-dataType.raml
-  post-registration resquest: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/dataType/post-registration-request-dataType.raml
-  post-registration response: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/dataType/post-registration-response-dataType.raml
+  error-dataType: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/dataType/error-dataType.raml
+  post-registration resquest: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/dataType/post-registration-request-dataType.raml
+  post-registration response: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/dataType/post-registration-response-dataType.raml
+
+  post-customerState resquest: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/dataType/post-customerState-request-dataType.raml
+  post-customerState response: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/dataType/post-customerState-response-dataType.raml
+
+
 
 /customer:
   /registration:
@@ -34,30 +39,68 @@ types:
           body:
             application/json:              
                 type: error-dataType
-                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-400-response-example.json
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-400-response-example.json
                        
         401:
           body:
             application/json:              
                 type: error-dataType
-                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-401-response-example.json
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-401-response-example.json
                   
         404:
           body:
             application/json:              
                 type: error-dataType
-                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-404-response-example.json
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-404-response-example.json
                   
         500: 
          body:
             application/json:              
                 type: error-dataType
-                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.0/example/error-500-response-example.json
+                example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-500-response-example.json
                   
           
                 
-              
-            
+/customerState:
+  post:
+    is:
+      - comman-header
+    body:
+      application/json:
+        type: post-customerState resquest
+        example: !include /example/post-customerState-request-example.json
+                    
+    responses:
+      201:
+        body:
+          application/json:
+            type: post-customerState response
+            example: !include /example/post-customerState-response-example.json
+                                      
+      400:
+        body:
+          application/json:              
+              type: error-dataType
+              example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-400-response-example.json
+                      
+      401:
+        body:
+          application/json:              
+              type: error-dataType
+              example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-401-response-example.json
+                
+      404:
+        body:
+          application/json:              
+              type: error-dataType
+              example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-404-response-example.json
+                
+      500: 
+        body:
+          application/json:              
+              type: error-dataType
+              example: !include /exchange_modules/786ec90a-8db2-415e-b364-24583d2ee700/comman-fragment/1.0.5/example/error-500-response-example.json              
+          
 
-             
             
+          
